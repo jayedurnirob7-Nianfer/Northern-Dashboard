@@ -7,9 +7,9 @@ import BulkSummaryModal from './BulkSummaryModal';
 import { generatePDF } from '@/lib/pdf';
 
 export default function Dashboard() {
-  const [shipments, setShipments] = useState([]);
+  const [shipments, setShipments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedShipment, setSelectedShipment] = useState(null);
+  const [selectedShipment, setSelectedShipment] = useState<any | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [statusFilter, setStatusFilter] = useState<string>('All');
   const [showBulkSummary, setShowBulkSummary] = useState(false);

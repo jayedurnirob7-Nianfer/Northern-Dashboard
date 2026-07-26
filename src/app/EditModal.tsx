@@ -139,7 +139,7 @@ export default function EditModal({ shipment, onClose, onSave }: { shipment: any
                 <label className="block text-xs text-gray-400 mb-1">Date</label>
                 <DatePicker 
                   selected={parseSafeDate(formData.date)} 
-                  onChange={(date) => handleDateChange('date', date)} 
+                  onChange={(date: Date | null) => handleDateChange('date', date)} 
                   dateFormat="dd-MMM-yyyy"
                   placeholderText="Select Date"
                   className="w-full bg-[#18181f] text-white p-2 rounded border border-[#3f3f46] text-sm cursor-pointer" 
@@ -233,7 +233,7 @@ export default function EditModal({ shipment, onClose, onSave }: { shipment: any
                   <label className="block text-xs text-gray-400 mb-1">Delivery Date</label>
                   <DatePicker 
                     selected={parseSafeDate(formData.deliveryDate)} 
-                    onChange={(date) => handleDateChange('deliveryDate', date)} 
+                    onChange={(date: Date | null) => handleDateChange('deliveryDate', date)} 
                     dateFormat="dd-MMM-yyyy"
                     placeholderText="Select Date"
                     className="w-full bg-[#18181f] text-white p-2 rounded border border-[#3f3f46] text-sm cursor-pointer" 
