@@ -205,18 +205,31 @@ export default function EditModal({ shipment, onClose, onSave }: { shipment: any
             <div className="bg-white dark:bg-[#09090b] p-4 rounded-lg border border-gray-200 dark:border-[#27272a]">
               <h3 className="text-xs font-semibold text-green-400 uppercase tracking-wider mb-3">Financials</h3>
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs text-gray-500 mb-1">Client Bill ($)</label>
-                  <input type="number" step="0.01" name="clientBill" value={formData.clientBill ?? 0} onChange={handleChange} className="w-full bg-white dark:bg-[#18181f] text-gray-900 dark:text-white p-2 rounded border border-gray-200 dark:border-[#3f3f46] text-sm" />
-                </div>
-                <div>
-                  <label className="block text-xs text-gray-500 mb-1">My Bill ($)</label>
-                  <input type="number" step="0.01" name="myBill" value={formData.myBill ?? 0} onChange={handleChange} className="w-full bg-white dark:bg-[#18181f] text-gray-900 dark:text-white p-2 rounded border border-gray-200 dark:border-[#3f3f46] text-sm" />
-                </div>
-                <div>
-                  <label className="block text-xs text-gray-500 mb-1">Total Profit ($)</label>
-                  <input type="number" step="0.01" name="totalProfit" value={formData.totalProfit ?? 0} onChange={handleChange} className="w-full bg-white dark:bg-[#18181f] text-gray-900 dark:text-white p-2 rounded border border-gray-200 dark:border-[#3f3f46] text-sm" />
-                </div>
+                {(() => {
+                  const w = parseFloat(formData.weight) || 0;
+                  const r = parseFloat(formData.rate) || 0;
+                  const fr = parseFloat(formData.finalRate) || 0;
+                  const displayClientBill = (formData.clientBill != null && formData.clientBill !== 0) ? parseFloat(formData.clientBill) : (w * fr);
+                  const displayMyBill = r > 0 ? ((formData.myBill != null && formData.myBill !== 0) ? parseFloat(formData.myBill) : (w * r)) : 0;
+                  const displayTotalProfit = r > 0 ? ((formData.totalProfit != null && formData.totalProfit !== 0) ? parseFloat(formData.totalProfit) : (displayClientBill - displayMyBill)) : 0;
+                  
+                  return (
+                    <>
+                      <div>
+                        <label className="block text-xs text-gray-500 mb-1">Client Bill ($)</label>
+                        <input type="text" readOnly value={displayClientBill.toFixed(2)} className="w-full bg-gray-100 dark:bg-[#09090b] text-gray-500 dark:text-gray-400 p-2 rounded border border-gray-200 dark:border-[#27272a] text-sm cursor-not-allowed font-medium" />
+                      </div>
+                      <div>
+                        <label className="block text-xs text-gray-500 mb-1">My Bill ($)</label>
+                        <input type="text" readOnly value={displayMyBill.toFixed(2)} className="w-full bg-gray-100 dark:bg-[#09090b] text-gray-500 dark:text-gray-400 p-2 rounded border border-gray-200 dark:border-[#27272a] text-sm cursor-not-allowed font-medium" />
+                      </div>
+                      <div className="col-span-2">
+                        <label className="block text-xs text-gray-500 mb-1">Total Profit ($)</label>
+                        <input type="text" readOnly value={displayTotalProfit.toFixed(2)} className="w-full bg-gray-100 dark:bg-[#09090b] text-gray-500 dark:text-gray-400 p-2 rounded border border-gray-200 dark:border-[#27272a] text-sm cursor-not-allowed font-medium" />
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             </div>
 

@@ -323,7 +323,7 @@ export default function Dashboard() {
 
         {/* Table Area */}
         <div className="flex-1 overflow-auto">
-            <table className="w-max text-left border-collapse text-xs table-fixed">
+            <table className="w-full text-left border-collapse text-xs table-fixed">
               <thead className="bg-white dark:bg-[#09090b] sticky top-0 uppercase tracking-wider text-[10px] z-10">
                 <tr>
                   <th className="p-3 w-12 min-w-[48px] max-w-[48px] text-center text-gray-700 dark:text-gray-400 font-semibold border-b border-gray-200 dark:border-[#27272a] whitespace-nowrap">
