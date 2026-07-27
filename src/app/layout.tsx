@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import { Package, Users, FileDown } from "lucide-react";
 import "./globals.css";
+import { Providers } from "./providers";
+import { ThemeToggle } from "./ThemeToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,32 +29,36 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-screen flex flex-col bg-[#09090b] text-gray-200">
-        <header className="flex justify-between items-center px-8 py-4 bg-[#121217] border-b border-[#27272a] shrink-0">
-          <div className="flex items-center gap-8">
-            <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <Package size={24} className="text-[#8b5cf6]" /> CRM Dashboard
-            </h2>
-            <nav className="flex items-center gap-4">
-              <Link href="/" className="text-sm font-semibold text-gray-400 hover:text-white transition-colors">Shipments</Link>
-              <Link href="/clients" className="text-sm font-semibold text-gray-400 hover:text-white transition-colors flex items-center gap-1"><Users size={16} /> Clients</Link>
-            </nav>
+      <body className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#09090b] text-slate-800 dark:text-gray-200 transition-colors">
+        <Providers>
+          <header className="flex justify-between items-center px-8 py-4 bg-white dark:bg-[#121217] border-b border-gray-200 dark:border-[#27272a] shrink-0 transition-colors">
+            <div className="flex items-center gap-8">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                <Package size={24} className="text-[#8b5cf6]" /> CRM Dashboard
+              </h2>
+              <nav className="flex items-center gap-4">
+                <Link href="/" className="text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Shipments</Link>
+                <Link href="/clients" className="text-sm font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1"><Users size={16} /> Clients</Link>
+              </nav>
+            </div>
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+              <a 
+                href="/api/export" 
+                download
+                className="flex items-center justify-center gap-2 bg-gray-100 dark:bg-[#27272a] hover:bg-gray-200 dark:hover:bg-[#3f3f46] text-gray-800 dark:text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors border border-gray-300 dark:border-[#3f3f46]"
+              >
+                <FileDown size={16} /> Download CSV Backup
+              </a>
+            </div>
+          </header>
+          <div className="flex-1 overflow-hidden">
+            {children}
           </div>
-          <div className="flex items-center gap-4">
-            <a 
-              href="/api/export" 
-              download
-              className="flex items-center justify-center gap-2 bg-[#27272a] hover:bg-[#3f3f46] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors border border-[#3f3f46]"
-            >
-              <FileDown size={16} /> Download CSV Backup
-            </a>
-          </div>
-        </header>
-        <div className="flex-1 overflow-hidden">
-          {children}
-        </div>
+        </Providers>
       </body>
     </html>
   );

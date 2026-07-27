@@ -75,7 +75,17 @@ export async function POST(req: Request) {
         deliveryDate: row[18] || '',
       };
       
-      await Shipment.create(shipment);
+      if (shipment.shippingNumber) {
+        // Upsert based on shippingNumber
+        await Shipment.findOneAndUpdate(
+          { shippingNumber: shipment.shippingNumber },
+          { $set: shipment },
+          { upsert: true, new: true }
+        );
+      } else {
+        // If no shipping number, just create it
+        await Shipment.create(shipment);
+      }
       importedCount++;
     }
     
